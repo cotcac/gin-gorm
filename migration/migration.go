@@ -7,6 +7,7 @@ import (
 
 func Migrate() {
 	db:= models.DBConn()
-	db.AutoMigrate(&models.User{},&models.Article{})
+	db.AutoMigrate(&models.Article{}).AddForeignKey("user_id", "users(id)", "RESTRICT", "RESTRICT")
+	db.AutoMigrate(&models.User{})
 	fmt.Print("im migrate!!")
 }
