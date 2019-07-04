@@ -13,11 +13,11 @@ func Insert(c *gin.Context) {
 		Name string
 	  }
 	type CreateUser struct {
-		Name string `json:"name" binding:"required"`
+		Name string `json:"name" binding:"required,min=3,max=15"`
 	}  
 	var json CreateUser
 	if err:= c.ShouldBindJSON(&json); err!=nil {
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(422, gin.H{"error": err.Error()})
 		return
 	}
 	user := User{Name:json.Name}  //db.Create(&User{Name:"Kinny 123"})
