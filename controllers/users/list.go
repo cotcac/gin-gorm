@@ -7,11 +7,8 @@ import (
 )
 
 func List(c *gin.Context) {
-	type User struct {
-		Id int `json:"id"`
-		Name string `json:"name"`
-	}
-	users := make([]User,0)
+
+	users := make([]models.User,0)
 	db:= models.DBConn()
 	perPage := 5
 	pageStr := c.DefaultQuery("page", "1")

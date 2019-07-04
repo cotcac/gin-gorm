@@ -9,10 +9,6 @@ import (
 func Edit(c *gin.Context) {
 	id := c.Param("id")
 	db:= models.DBConn()
-	type User struct {
-		ID   int
-		Name string
-	  }
 	type EditUser struct {
 		Name string `json:"name" binding:"required,min=3,max=15"`
 	}
@@ -23,7 +19,7 @@ func Edit(c *gin.Context) {
 		return 
 	}
 	fmt.Println(json)
-	var user User
+	var user models.User
 	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
 		c.AbortWithStatus(404)
 		return
