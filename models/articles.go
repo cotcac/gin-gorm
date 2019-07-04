@@ -1,8 +1,8 @@
 package models
 
 // users type details
-type User struct {
+type Article struct {
 	ID   int
-	Name string
-	Article []Article
+	Title string
+	UserID int
   }
