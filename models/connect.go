@@ -3,15 +3,41 @@ package models
 import (
 	"github.com/jinzhu/gorm"
 	"time"
+	"encoding/json"
+	"os"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"fmt"
 )
+type Config struct {
+	Database struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+		Db string `json:"db"`
+	}`json:"database"`
+}
+func LoadConfiguration(filename string) (Config, error) {
+	var config Config
+	configFile, err := os.Open(filename)
+	defer configFile.Close()
+    if err!=nil{
+		return config, err
+	}
+	jsonParser := json.NewDecoder(configFile)
+	err = jsonParser.Decode(&config)
+	return config, err
 
+}
 func DBConn() (db *gorm.DB) {
+	config,err := LoadConfiguration("config.json")
+	if err != nil {
+		panic(err.Error())
+	}
+	fmt.Println("password:",config.Database.Password)
 	dbDriver := "mysql"
-    dbUser := "root"
-    dbPass := ""
-    dbName := "gorm"
-    db, err := gorm.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName+"?charset=utf8&parseTime=True&loc=Local")
+    dbUser := config.Database.Username
+    dbPass := config.Database.Password
+    dbName := config.Database.Db
+    db, err = gorm.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName+"?charset=utf8&parseTime=True&loc=Local")
     if err != nil {
         panic(err.Error())
 	}
