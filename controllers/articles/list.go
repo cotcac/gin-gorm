@@ -30,7 +30,7 @@ func List(c *gin.Context) {
 		skip = 0
 	}
 	// var user models.User
-	if err := db.Preload("User").Find(&articles).Offset(skip).Limit(perPage + 1).Error; err != nil {
+	if err := db.Preload("User").Preload("Categories").Find(&articles).Offset(skip).Limit(perPage + 1).Error; err != nil {
 		c.JSON(500, gin.H{
 			"message":err,
 		})
