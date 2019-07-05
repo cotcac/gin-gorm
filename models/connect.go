@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"os"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"fmt"
 )
 type Config struct {
 	Database struct {
@@ -32,7 +31,6 @@ func DBConn() (db *gorm.DB) {
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Println("password:",config.Database.Password)
 	dbDriver := "mysql"
     dbUser := config.Database.Username
     dbPass := config.Database.Password
