@@ -5,4 +5,5 @@ type Article struct {
 	ID   int
 	Title string
 	UserID int
+	User User
   }
