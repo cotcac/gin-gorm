@@ -4,5 +4,5 @@ package models
 type User struct {
 	ID   int
 	Name string
-	Article []Article
+	Article []Article `gorm:"association_autoupdate:false;association_autocreate:false"`
   }

@@ -8,6 +8,7 @@ import (
 
 func Insert(c *gin.Context) {
 	db:= models.DBConn()
+	
 	type CreateArticle struct {
 		Title string `json:"title" binding:"required,min=3,max=15"`
 		UserID int `json:"user_id" binding:"required"`
@@ -20,8 +21,6 @@ func Insert(c *gin.Context) {
 		c.JSON(422, gin.H{"error": err.Error()})
 		return
 	}
-	fmt.Print("Json:",json.Categories)
-
 	// return
 	// get from database
 
@@ -30,6 +29,7 @@ func Insert(c *gin.Context) {
 
 	// end get category.
 	article := models.Article{Title:json.Title, UserID:json.UserID, Categories:json.Categories}  //Categories:[]models.Category{golang,nodejs}
+	// db.Set("gorm:association_autoupdate", false).Create(&article)
 	if err := db.Create(&article).Error; err != nil {
 		c.JSON(500, gin.H{
 			"message":err,

@@ -6,5 +6,5 @@ type Article struct {
 	Title string
 	UserID int
 	User User
-	Categories []Category `gorm:"many2many:category_article;"`
+	Categories []Category `gorm:"many2many:category_article;association_autoupdate:false;association_autocreate:false"`
   }
