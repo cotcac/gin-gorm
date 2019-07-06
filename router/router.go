@@ -30,6 +30,7 @@ func setupRouter() *gin.Engine {
 		// CATEGORY ENDPOINT.
 
 		router.POST("/categories/", categories.Insert)
+		router.GET("/categories/", categories.List)
 
 
 

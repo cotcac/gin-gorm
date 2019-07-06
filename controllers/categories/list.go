@@ -1,4 +1,4 @@
-package users
+package categories
 
 import (
 	"github.com/gin-gonic/gin"
@@ -8,7 +8,7 @@ import (
 
 func List(c *gin.Context) {
 
-	users := make([]models.User,0)
+	categories := make([]models.Category,0)
 	db:= models.DBConn()
 	perPage := 5
 	pageStr := c.DefaultQuery("page", "1")
@@ -27,24 +27,23 @@ func List(c *gin.Context) {
 	}else {
 		skip = 0
 	}
-	if err := db.Offset(skip).Limit(perPage + 1).Find(&users).Error; err != nil {
+	if err := db.Offset(skip).Limit(perPage + 1).Find(&categories).Error; err != nil {
 		c.JSON(500, gin.H{
 			"message":err,
 		})
 		return 
 	 }
 	var nextPage bool
-	usersLen := len(users)
-	if usersLen > perPage {
+	categoriesLen := len(categories)
+	if categoriesLen > perPage {
 		nextPage = true
-		users = users[:len(users)-1]// remote the last item.
+		categories = categories[:len(categories)-1]// remote the last item.
 	} else {
 		nextPage = false
 	}
-
 	c.JSON(200,gin.H{
 		"page":page,
-		"result":users,
+		"result":categories,
 		"next": nextPage,
 	})
 }
