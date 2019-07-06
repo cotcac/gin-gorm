@@ -9,11 +9,7 @@ import (
 func Edit(c *gin.Context) {
 	id := c.Param("id")
 	db:= models.DBConn()
-	type EditUser struct {
-		Name string `json:"name" binding:"required,min=3,max=15"`
-	}
-	var json EditUser
-    
+	var json models.User
 	if err:= c.ShouldBindJSON(&json); err != nil {
 		c.JSON(200, gin.H{"error": err.Error()})
 		return 

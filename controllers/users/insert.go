@@ -8,10 +8,7 @@ import (
 
 func Insert(c *gin.Context) {
 	db:= models.DBConn()
-	type CreateUser struct {
-		Name string `json:"name" binding:"required,min=3,max=15"`
-	}  
-	var json CreateUser
+	var json models.User
 	if err:= c.ShouldBindJSON(&json); err!=nil {
 		c.JSON(422, gin.H{"error": err.Error()})
 		return
