@@ -18,6 +18,7 @@ func ValidateToken(myToken string) (bool, string) {
 		return false, ""
 	}
 	claims := token.Claims.(*MyCustomClaims)
+	fmt.Println("Username: ", claims.Usernname)
 	return token.Valid, claims.Usernname
 }
 

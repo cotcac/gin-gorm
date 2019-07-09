@@ -13,7 +13,7 @@ import (
 
 // MyCustomClaims is ...
 type MyCustomClaims struct {
-	Usernname string
+	Usernname string `json:"username"`
 	jwt.StandardClaims
 }
 
@@ -23,13 +23,6 @@ func checkPasswordHash(password, hash string) bool {
 }
 
 var mySigningKey = []byte("secret")
-
-//PasswordMismatchError is ...
-type PasswordMismatchError struct{}
-
-func (e *PasswordMismatchError) Error() string {
-	return "password didn't match"
-}
 
 //Login func
 func Login(c *gin.Context) {
@@ -52,8 +45,9 @@ func Login(c *gin.Context) {
 		c.JSON(422, gin.H{"Error": err.Error()})
 		return
 	}
+	Username := user.Name
 	claims := MyCustomClaims{
-		"Usernname",
+		Username,
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 5).Unix(),
 			Issuer:    "test",
