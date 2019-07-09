@@ -22,7 +22,11 @@ func Insert(c *gin.Context) {
 		c.JSON(422, gin.H{"error": err.Error()})
 		return
 	}
-	hash, _ := hashPassword(json.Password)                                  // ignore error for the sake of simplicity
+	hash, err := hashPassword(json.Password)
+	if err != nil {
+		c.JSON(422, gin.H{"error": err.Error()})
+		return
+	}
 	user := models.User{Name: json.Name, Email: json.Email, Password: hash} //db.Create(&User{Name:"Kinny 123"})
 	if err := db.Create(&user).Error; err != nil {
 		c.JSON(500, gin.H{
@@ -32,6 +36,6 @@ func Insert(c *gin.Context) {
 	}
 	fmt.Println(user)
 	c.JSON(200, gin.H{
-		"success": user,
+		"success": user.ID,
 	})
 }
