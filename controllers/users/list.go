@@ -9,7 +9,6 @@ import (
 
 // List user
 func List(c *gin.Context) {
-
 	users := make([]models.User, 0)
 	db := models.DBConn()
 	perPage := 5
@@ -43,10 +42,14 @@ func List(c *gin.Context) {
 	} else {
 		nextPage = false
 	}
+	results := make([]models.ListUsers, 0)
+	for _, i := range users {
+		results = append(results, i.ToListUsers())
+	}
 
 	c.JSON(200, gin.H{
 		"page":   page,
-		"result": users,
+		"result": results,
 		"next":   nextPage,
 	})
 }

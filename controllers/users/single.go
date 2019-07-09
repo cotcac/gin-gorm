@@ -15,7 +15,9 @@ func Single(c *gin.Context) {
 	if err := db.Where("id = ?", id).First(&user).Association("Article").Error; err != nil {
 		c.AbortWithStatus(404)
 		fmt.Print(err)
-	} else {
-		c.JSON(200, user)
+		return
 	}
+	result := user.ToListUsers()
+	c.JSON(200, result)
+
 }
