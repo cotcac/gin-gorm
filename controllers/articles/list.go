@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// List of all article
 func List(c *gin.Context) {
 
 	articles := make([]models.Article, 0)
@@ -57,5 +58,4 @@ func List(c *gin.Context) {
 		"result": results,
 		"next":   nextPage,
 	})
-	defer db.Close()
 }

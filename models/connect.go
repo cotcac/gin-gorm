@@ -1,24 +1,28 @@
+package models
 
-package models 
 import (
-	"github.com/jinzhu/gorm"
-	"time"
 	"encoding/json"
 	"os"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"time"
+
+	"github.com/jinzhu/gorm"
 )
+
+// Config is...
 type Config struct {
 	Database struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
-		Db string `json:"db"`
-	}`json:"database"`
+		Db       string `json:"db"`
+	} `json:"database"`
 }
+
+// LoadConfiguration is ...
 func LoadConfiguration(filename string) (Config, error) {
 	var config Config
 	configFile, err := os.Open(filename)
 	defer configFile.Close()
-    if err!=nil{
+	if err != nil {
 		return config, err
 	}
 	jsonParser := json.NewDecoder(configFile)
@@ -26,18 +30,20 @@ func LoadConfiguration(filename string) (Config, error) {
 	return config, err
 
 }
+
+// DBConn is ...
 func DBConn() (db *gorm.DB) {
-	config,err := LoadConfiguration("config.json")
+	config, err := LoadConfiguration("config.json")
 	if err != nil {
 		panic(err.Error())
 	}
 	dbDriver := "mysql"
-    dbUser := config.Database.Username
-    dbPass := config.Database.Password
-    dbName := config.Database.Db
-    db, err = gorm.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName+"?charset=utf8&parseTime=True&loc=Local")
-    if err != nil {
-        panic(err.Error())
+	dbUser := config.Database.Username
+	dbPass := config.Database.Password
+	dbName := config.Database.Db
+	db, err = gorm.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName+"?charset=utf8&parseTime=True&loc=Local")
+	if err != nil {
+		panic(err.Error())
 	}
 	// SetMaxIdleConns sets the maximum number of connections in the idle connection pool.
 	db.DB().SetMaxIdleConns(10)
@@ -47,6 +53,6 @@ func DBConn() (db *gorm.DB) {
 
 	// SetConnMaxLifetime sets the maximum amount of time a connection may be reused.
 	db.DB().SetConnMaxLifetime(time.Hour)
-    // defer db.Close()
-    return db
+	// defer db.Close()
+	return db
 }
