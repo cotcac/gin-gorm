@@ -12,7 +12,7 @@ func setupRouter() *gin.Engine {
 	router := r.Group("/api")
 	{
 		// USERS END POINT
-		router.GET("/users/ping", users.Ping)
+		router.GET("/users/ping", users.CheckToken, users.Ping)
 		router.GET("/users/", users.List)
 		router.GET("/users/single/:id", users.Single)
 		router.POST("/users/", users.Insert)

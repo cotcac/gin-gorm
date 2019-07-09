@@ -52,16 +52,14 @@ func Login(c *gin.Context) {
 		c.JSON(422, gin.H{"Error": err.Error()})
 		return
 	}
-	// claims := MyCustomClaims{
-	// 	Usernname: user.Name,
-	// 	jwt.StandardClaims: {
-	// 		ExpiresAt: time.Now().Add(time.Hour * 5).Unix(),
-	// 	},
-	// }
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"username": user.Name,
-		"nbf":      time.Now().Add(time.Hour * 5).Unix(),
-	})
+	claims := MyCustomClaims{
+		"Usernname",
+		jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(time.Hour * 5).Unix(),
+			Issuer:    "test",
+		},
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	// Sign and get the complete encoded token as a string using the secret
 	tokenString, err := token.SignedString(mySigningKey)
 	fmt.Println(tokenString, err)
