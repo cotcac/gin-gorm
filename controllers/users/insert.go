@@ -8,8 +8,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// HashPassword
-func HashPassword(password string) (string, error) {
+//HashPassword is ...
+func hashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	return string(bytes), err
 }
@@ -22,7 +22,7 @@ func Insert(c *gin.Context) {
 		c.JSON(422, gin.H{"error": err.Error()})
 		return
 	}
-	hash, _ := HashPassword(json.Password)                                  // ignore error for the sake of simplicity
+	hash, _ := hashPassword(json.Password)                                  // ignore error for the sake of simplicity
 	user := models.User{Name: json.Name, Email: json.Email, Password: hash} //db.Create(&User{Name:"Kinny 123"})
 	if err := db.Create(&user).Error; err != nil {
 		c.JSON(500, gin.H{
