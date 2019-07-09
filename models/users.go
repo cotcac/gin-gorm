@@ -14,3 +14,9 @@ type ShortUser struct {
 	ID   int
 	Name string
 }
+
+//Login is ...
+type Login struct {
+	Email    string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required,min=6"`
+}
