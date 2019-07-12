@@ -20,8 +20,7 @@ func setupRouter() *gin.Engine {
 	auth := r.Group("/api", users.CheckToken)
 	{
 		// users
-		auth.POST("/users/", users.Insert)
-		auth.POST("/users/login", users.Login)
+
 		auth.PATCH("/users/edit/:id", users.Edit)
 		auth.DELETE("/users/delete/:id", users.Delete)
 
@@ -37,6 +36,8 @@ func setupRouter() *gin.Engine {
 		// router.Use(users.CheckToken)
 
 		// USERS END POINT
+		router.POST("/users/", users.Insert)
+		router.POST("/users/login", users.Login)
 		router.GET("/users/ping", users.CheckToken, users.Ping)
 		router.GET("/users/", users.List)
 		router.GET("/users/single/:id", users.Single)
