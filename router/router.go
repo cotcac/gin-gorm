@@ -11,10 +11,11 @@ import (
 func setupRouter() *gin.Engine {
 	r := gin.Default()
 	r.Static("/public", "./public")
-	r.LoadHTMLGlob("templates/*")
+	r.LoadHTMLGlob("templates/**/*")
 
 	// home
 	r.GET("/", home.Home)
+	r.GET("/users", users.ListRender)
 
 	// Api auth required
 	auth := r.Group("/api", users.CheckToken)
