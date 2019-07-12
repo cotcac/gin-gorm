@@ -4,10 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Init ....
+// Home is ....
 func Home(c *gin.Context) {
 
-	c.JSON(200, gin.H{
-		"success": "hello world",
+	c.HTML(200, "home.html", gin.H{
+		"title": "Main website",
 	})
 }
