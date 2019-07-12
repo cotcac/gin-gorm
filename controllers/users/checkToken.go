@@ -26,6 +26,14 @@ func ValidateToken(myToken string) (bool, string) {
 func CheckToken(c *gin.Context) {
 
 	reqToken := c.Request.Header.Get("Authorization")
+	if reqToken == "" {
+		c.Abort()
+		c.JSON(301, gin.H{
+			"message": "unAuth",
+		})
+		return
+
+	}
 	// Split at the space
 	splitToken := strings.Split(reqToken, "Bearer ")
 	reqToken = splitToken[1]
