@@ -15,6 +15,7 @@ func setupRouter() *gin.Engine {
 
 	// home
 	r.GET("/", home.Home)
+	r.GET("/stream", home.Header, home.Body, home.Footer)
 	r.GET("/users", users.ListRender)
 
 	// Api auth required
