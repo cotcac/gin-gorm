@@ -1,5 +1,5 @@
 # config.json
- manually create this bease it not clone with github.
+ manually create this because it not clone with github.
  ```
  {
     "database":{
